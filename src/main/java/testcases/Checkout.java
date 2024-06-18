@@ -17,172 +17,117 @@ import pages.LoginPage;
 
 import java.time.Duration;
 
-public class Checkout {
+public class Checkout
+{
     WebDriver driver;
     String firstProductName;
     String secondProductName;
 
     @BeforeClass
-    public void setUp(){
+    public void SetUp()
+    {
         driver = WebDriverManager.chromedriver().create();
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
     }
 
     @Test
-    public void a_loginTest(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    public void AALoginTest()
+    {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = new HomePage(driver);
 
-        //explicit wait untuk menunggu element terlihat di layar
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
-
-        //assertion 1 : cek current URL apakah sudah sesuai dengan URL Login Page
-        Assert.assertEquals(loginPage.getCurrentURL(),"https://www.saucedemo.com/");
-
-        //assertion 2 : cek apakah username field, password field, dan login button muncul
-        loginPage.usernameFieldIsDisplayed();
-        loginPage.passwordFieldIsDisplayed();
-        loginPage.loginButtonIsDisplayed();
-
-        //method action element
-        loginPage.inputUsername("standard_user");
-        loginPage.inputPassword("secret_sauce");
-        loginPage.clickLoginButton();
-
-        //assertion 3 : cek current URL apakah sudah sesuai dengan URL Home Page
-        Assert.assertEquals(homePage.getCurrentURL(),"https://www.saucedemo.com/inventory.html");
-
-        //assertion 4 : cek dashboard teks apakah sudah sesuai dengan ekspektasi
-        Assert.assertEquals(homePage.getDashboardText(),"Products");
-
-        //assertion 5 : cek apakah icon shopping cart muncul
-        homePage.shoppingCartIconIsDisplayed();
+        Assert.assertEquals(loginPage.GetCurrentURL(),"https://www.saucedemo.com/");
+        loginPage.UsernameFieldIsDisplayed();
+        loginPage.PasswordFieldIsDisplayed();
+        loginPage.LoginButtonIsDisplayed();
+        loginPage.InputUsername("standard_user");
+        loginPage.InputPassword("secret_sauce");
+        loginPage.ClickLoginButton();
+        Assert.assertEquals(homePage.GetCurrentURL(),"https://www.saucedemo.com/inventory.html");
+        Assert.assertEquals(homePage.GetDashboardText(),"Products");
+        homePage.CartIconIsDisplayed();
     }
 
     @Test
-    public void b_addToCartTest(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    public void BBAddToCartTest()
+    {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         HomePage homePage = new HomePage(driver);
         CartPage cartPage = new CartPage(driver);
         InformationPage informationPage = new InformationPage(driver);
 
-        //explicit wait untuk menunggu element terlihat di layar
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='title']")));
+        homePage.ClickAddToCartFirstItem();
+        homePage.ClickAddToCartSecondItem();
+        firstProductName = homePage.firstProductName;
+        secondProductName = homePage.secondProductName;
+        int productsInCart = Integer.parseInt(homePage.GetCartBadge());
+        Assert.assertEquals(productsInCart, homePage.clickCountAddToCartButton);
+        homePage.ClickCartIcon();
 
-        //method action element
-        homePage.clickAddToCartFirstProduct();
-        homePage.clickAddToCartSecondProduct();
-
-        firstProductName=homePage.firstProductName;
-        secondProductName=homePage.secondProductName;
-
-        //assertion 6 : cek apakah jumlah produk yang dimasukkan dalam keranjang telah sesuai
-        int productsInCart = Integer.parseInt(homePage.getCartBadge());
-        Assert.assertEquals(productsInCart, homePage.jumlahClickAddToCartButton);
-
-        //method action element
-        homePage.clickShoppingCart();
-
-        //explicit wait untuk menunggu element terlihat di layar
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='title']")));
-
-        //assertion 7 : cek current URL apakah sudah sesuai dengan Cart Page
-        Assert.assertEquals(cartPage.getCurrentURL(),"https://www.saucedemo.com/cart.html");
-
-        //assertion 8 : cek dashboard teks apakah sudah sesuai dengan ekspektasi
-        Assert.assertEquals(cartPage.getDashboardText(),"Your Cart");
-
-        //assertion 9 : cek apakah produk dalam Cart sudah sesuai
-        Assert.assertEquals(cartPage.getFirstProductInCart(),firstProductName);
-        Assert.assertEquals(cartPage.getSecondProductInCart(),secondProductName);
-
-        //method action element
-        cartPage.clickCheckoutButton();
-
-        //assertion 10 : cek current URL apakah sudah sesuai dengan Your Information Page
-        Assert.assertEquals(informationPage.getCurrentURL(),"https://www.saucedemo.com/checkout-step-one.html");
+        Assert.assertEquals(cartPage.GetCurrentURL(),"https://www.saucedemo.com/cart.html");
+        Assert.assertEquals(cartPage.GetDashboardText(),"Your Cart");
+        Assert.assertEquals(cartPage.GetFirstItemCart(),firstProductName);
+        Assert.assertEquals(cartPage.GetSecondItemCart(),secondProductName);
+        cartPage.ClickCheckoutButton();
+        Assert.assertEquals(informationPage.GetCurrentURL(),"https://www.saucedemo.com/checkout-step-one.html");
     }
 
     @Test
-    public void c_InformationTest(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    public void CCInformationTest()
+    {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         InformationPage informationPage = new InformationPage(driver);
         OverviewPage overviewPage = new OverviewPage(driver);
 
-        //explicit wait untuk menunggu element terlihat di layar
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='title']")));
-
-        //assertion 11 : cek dashboard teks apakah sudah sesuai dengan ekspektasi
-        Assert.assertEquals(informationPage.getDashboardText(),"Checkout: Your Information");
-
-        //assertion 12 : cek cek apakah form muncul
-        informationPage.formIsDisplayed();
-
-        //method action element
-        informationPage.inputFirstName("Gilang");
-        informationPage.inputLastName("Zhanuardy");
-        informationPage.inputPostalCode("15510");
-        informationPage.clickContinueButton();
-
-        //assertion 13 : cek current URL apakah sudah sesuai dengan Your Overview Page
-        Assert.assertEquals(overviewPage.getCurrentURL(),"https://www.saucedemo.com/checkout-step-two.html");
+        Assert.assertEquals(informationPage.GetDashboardText(),"Checkout: Your Information");
+        informationPage.CheckoutFormIsDisplayed();
+        informationPage.InputFirstName("Linggar");
+        informationPage.InputLastName("Bhakti Pratama");
+        informationPage.InputPostalCode("61171");
+        informationPage.ClickContinueButton();
+        Assert.assertEquals(overviewPage.GetCurrentURL(),"https://www.saucedemo.com/checkout-step-two.html");
     }
 
     @Test
-    public void d_overviewTest(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    public void DDOverviewTest()
+    {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         OverviewPage overviewPage = new OverviewPage(driver);
-        CompletePage completePage = new CompletePage(driver);
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
 
-        //explicit wait untuk menunggu element terlihat di layar
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='title']")));
-
-        //assertion 14 : cek dashboard teks apakah sudah sesuai dengan ekspektasi
-        Assert.assertEquals(overviewPage.getDashboardText(),"Checkout: Overview");
-
-        //assertion 15 : cek apakah produk sudah sesuai
-        Assert.assertEquals(overviewPage.getFirstProductInCart(),firstProductName);
-        Assert.assertEquals(overviewPage.getSecondProductInCart(),secondProductName);
-
-        //method action element
-        overviewPage.clickFinishButton();
-
-        //assertion 16 : cek current URL apakah sudah sesuai dengan Complete Page
-        Assert.assertEquals(completePage.getCurrentURL(),"https://www.saucedemo.com/checkout-complete.html");
+        Assert.assertEquals(overviewPage.GetDashboardText(),"Checkout: Overview");
+        Assert.assertEquals(overviewPage.GetFirstItemInCart(),firstProductName);
+        Assert.assertEquals(overviewPage.GetSecondItemInCart(),secondProductName);
+        overviewPage.ClickFinishButton();
+        Assert.assertEquals(checkoutPage.GetCurrentURL(),"https://www.saucedemo.com/checkout-complete.html");
     }
 
     @Test
-    public void e_completeTest(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        CompletePage completePage = new CompletePage(driver);
+    public void EECheckoutTest()
+    {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
         HomePage homePage = new HomePage(driver);
 
-        //explicit wait untuk menunggu element terlihat di layar
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='title']")));
-
-        //assertion 17 : cek dashboard teks apakah sudah sesuai dengan ekspektasi
-        Assert.assertEquals(completePage.getDashboardText(),"Checkout: Complete!");
-
-        //assertion 18 : cek apakah icon complete muncul
-        completePage.completeIconIsDisplayed();
-
-        //assertion 19 : cek apakah teks sudah sesuai
-        Assert.assertEquals(completePage.getThankYou_text(),"Thank you for your order!");
-
-        //assertion 20 : cek apakah teks deskripsi sudah sesuai
-        Assert.assertEquals(completePage.getDescription_text(),"Your order has been dispatched, and will arrive just as fast as the pony can get there!");
-
-        //method action element
-        completePage.clickBackButton();
-
-        //assertion 21 : cek current URL apakah sudah sesuai dengan URL Home Page
-        Assert.assertEquals(homePage.getCurrentURL(),"https://www.saucedemo.com/inventory.html");
+        Assert.assertEquals(checkoutPage.GetDashboardText(),"Checkout: Complete!");
+        checkoutPage.CompleteIconIsDisplayed();
+        Assert.assertEquals(checkoutPage.GetGreetingText(),"Thank you for your order!");
+        Assert.assertEquals(checkoutPage.GetDescriptionText(),"Your order has been dispatched, and will arrive just as fast as the pony can get there!");
+        checkoutPage.ClickBackButton();
+        Assert.assertEquals(homePage.GetCurrentURL(),"https://www.saucedemo.com/inventory.html");
     }
 
     @AfterClass
-    public void tearDown(){
+    public void TakeDown()
+    {
         driver.quit();
     }
 }

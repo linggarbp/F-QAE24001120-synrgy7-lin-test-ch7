@@ -2,58 +2,61 @@ package pages;
 
 import org.openqa.selenium.*;
 
-import java.util.Arrays;
-
-import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
 
-public class HomePage {
-    //atribut untuk  masing-masing element
+public class HomePage
+{
     WebDriver driver;
 
-    By dashboard_text = xpath("//*[@data-test='title']");
-    By shoppingcart_icon = xpath("//*[@data-test='shopping-cart-link']");
-    By sorting_select = xpath("//*[@data-test='product-sort-container']");
-    By hightolow = xpath("//*[@value='hilo']");
-    By first_product = xpath("(//*[@data-test='inventory-item-price'])[1]");
-    By second_product = xpath("(//*[@data-test='inventory-item-price'])[2]");
-    By addtocartfirstproduct_button = xpath("//button[@data-test='add-to-cart-sauce-labs-backpack']");
-    By addtocartsecondproduct_button = xpath("//button[@data-test='add-to-cart-sauce-labs-bike-light']");
-    By cart_badge = xpath("//*[@data-test='shopping-cart-badge']");
-    By first_product_name = xpath("(//*[@data-test='inventory-item-name'])[1]");
-    By second_product_name = xpath("(//*[@data-test='inventory-item-name'])[2]");
+    By dashboardText = xpath("//*[@data-test='title']");
+    By cartIcon = xpath("//*[@data-test='shopping-cart-link']");
+    By sortingDropdown = xpath("//*[@data-test='product-sort-container']");
+    By highToLow = xpath("//*[@value='hilo']");
+    By firstItemPrice = xpath("(//*[@data-test='inventory-item-price'])[1]");
+    By secondItemPrice = xpath("(//*[@data-test='inventory-item-price'])[2]");
+    By addToCartFirstItemButton = xpath("//button[@data-test='add-to-cart-sauce-labs-backpack']");
+    By addToCartSecondItemButton = xpath("//button[@data-test='add-to-cart-sauce-labs-bike-light']");
+    By cartBadge = xpath("//*[@data-test='shopping-cart-badge']");
+    By firstItemName = xpath("(//*[@data-test='inventory-item-name'])[1]");
+    By secondItemName = xpath("(//*[@data-test='inventory-item-name'])[2]");
 
-    public int jumlahClickAddToCartButton;
+    public int clickCountAddToCartButton;
     public String firstProductName;
     public String secondProductName;
 
-    //method untuk action
-    public HomePage(WebDriver driver){
+    public HomePage(WebDriver driver)
+    {
         this.driver=driver;
     }
 
-    public String getCurrentURL(){
+    public String GetCurrentURL()
+    {
         return driver.getCurrentUrl();
     }
 
-    public String getDashboardText(){
-        return driver.findElement(dashboard_text).getText();
+    public String GetDashboardText()
+    {
+        return driver.findElement(dashboardText).getText();
     }
 
-    public void shoppingCartIconIsDisplayed(){
-        driver.findElement(shoppingcart_icon).isDisplayed();
+    public void CartIconIsDisplayed()
+    {
+        driver.findElement(cartIcon).isDisplayed();
     }
 
-    public void clickSortingSelect(){
-        driver.findElement(sorting_select).click();
+    public void SortingDropdown()
+    {
+        driver.findElement(sortingDropdown).click();
     }
 
-    public void clickHighToLow(){
-        driver.findElement(hightolow).click();
+    public void ClickHighToLow()
+    {
+        driver.findElement(highToLow).click();
     }
 
-    public String getPriceFirstProduct(){
-        WebElement element = driver.findElement(first_product);
+    public String GetFirstItemPrice()
+    {
+        WebElement element = driver.findElement(firstItemPrice);
 
         // Get the text of the element
         String elementText = element.getText();
@@ -80,8 +83,9 @@ public class HomePage {
         return price;
     }
 
-    public String getPriceSecondProduct(){
-        WebElement element = driver.findElement(second_product);
+    public String GetSecondItemPrice()
+    {
+        WebElement element = driver.findElement(secondItemPrice);
 
         // Get the text of the element
         String elementText = element.getText();
@@ -108,23 +112,27 @@ public class HomePage {
         return price;
     }
 
-    public void clickAddToCartFirstProduct(){
-        driver.findElement(addtocartfirstproduct_button).click();
-        jumlahClickAddToCartButton++;
-        firstProductName = driver.findElement(first_product_name).getText();
+    public void ClickAddToCartFirstItem()
+    {
+        driver.findElement(addToCartFirstItemButton).click();
+        clickCountAddToCartButton++;
+        firstProductName = driver.findElement(firstItemName).getText();
     }
 
-    public void clickAddToCartSecondProduct(){
-        driver.findElement(addtocartsecondproduct_button).click();
-        jumlahClickAddToCartButton++;
-        secondProductName = driver.findElement(second_product_name).getText();
+    public void ClickAddToCartSecondItem()
+    {
+        driver.findElement(addToCartSecondItemButton).click();
+        clickCountAddToCartButton++;
+        secondProductName = driver.findElement(secondItemName).getText();
     }
 
-    public String getCartBadge(){
-        return driver.findElement(cart_badge).getText();
+    public String GetCartBadge()
+    {
+        return driver.findElement(cartBadge).getText();
     }
 
-    public void clickShoppingCart(){
-        driver.findElement(shoppingcart_icon).click();
+    public void ClickCartIcon()
+    {
+        driver.findElement(cartIcon).click();
     }
 }

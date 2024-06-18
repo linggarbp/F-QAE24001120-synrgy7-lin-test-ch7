@@ -13,49 +13,40 @@ import pages.LoginPage;
 
 import java.time.Duration;
 
-public class LoginFailed {
+public class LoginFailed
+{
     WebDriver driver;
 
     @BeforeClass
-    public void setUp(){
+    public void SetUp()
+    {
         driver = WebDriverManager.chromedriver().create();
         driver.manage().window().maximize();
         driver.get("https://www.saucedemo.com/");
     }
 
     @Test
-    public void loginTest(){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    public void AALoginTest()
+    {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         LoginPage loginPage = new LoginPage(driver);
 
-        //explicit wait untuk menunggu element terlihat di layar
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
-
-        //assertion 1 : cek current URL apakah sudah sesuai dengan URL Login Page
-        Assert.assertEquals(loginPage.getCurrentURL(),"https://www.saucedemo.com/");
-
-        //assertion 2 : cek apakah username field, password field, dan login button muncul
-        loginPage.usernameFieldIsDisplayed();
-        loginPage.passwordFieldIsDisplayed();
-        loginPage.loginButtonIsDisplayed();
-
-        //method action element
-        loginPage.inputUsername("standard_user");
-        loginPage.inputPassword("passwordtestnegative");
-        loginPage.clickLoginButton();
-
-        //assertion 3 : cek current URL apakah URL halaman tidak berubah
-        Assert.assertEquals(loginPage.getCurrentURL(),"https://www.saucedemo.com/");
-
-        //assertion 4 : cek apakah Error Warning muncul
-        loginPage.errorWarningIsDisplayed();
-
-        //assertion 5 : cek apakah teks Error sudah sesuai ekspektasi
-        Assert.assertEquals(loginPage.errorGetText(),"Epic sadface: Username and password do not match any user in this service");
+        Assert.assertEquals(loginPage.GetCurrentURL(),"https://www.saucedemo.com/");
+        loginPage.UsernameFieldIsDisplayed();
+        loginPage.PasswordFieldIsDisplayed();
+        loginPage.LoginButtonIsDisplayed();
+        loginPage.InputUsername("standard_user");
+        loginPage.InputPassword("passwordtestnegative");
+        loginPage.ClickLoginButton();
+        Assert.assertEquals(loginPage.GetCurrentURL(),"https://www.saucedemo.com/");
+        loginPage.ErrorMessageIsDisplayed();
+        Assert.assertEquals(loginPage.ErrorGetText(),"Epic sadface: Username and password do not match any user in this service");
     }
 
     @AfterClass
-    public void tearDown(){
+    public void TakeDown()
+    {
         driver.quit();
     }
 }

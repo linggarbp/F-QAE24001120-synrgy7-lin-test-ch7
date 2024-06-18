@@ -5,37 +5,42 @@ import org.openqa.selenium.WebDriver;
 
 import static org.openqa.selenium.By.xpath;
 
-public class OverviewPage {
-    //atribut untuk  masing-masing element
+public class OverviewPage
+{
     WebDriver driver;
 
-    By dashboard_text = xpath("//*[@data-test='title']");
-    By first_productincart = xpath("(//*[@data-test='inventory-item-name'])[1]");
-    By second_productincart = xpath("(//*[@data-test='inventory-item-name'])[2]");
-    By finish_button = xpath("//*[@data-test='finish']");
+    By dashboardText = xpath("//*[@data-test='title']");
+    By firstItemInCart = xpath("(//*[@data-test='inventory-item-name'])[1]");
+    By secondItemInCart = xpath("(//*[@data-test='inventory-item-name'])[2]");
+    By finishButton = xpath("//*[@data-test='finish']");
 
-    //method untuk action
-    public OverviewPage(WebDriver driver){
-        this.driver=driver;
+    public OverviewPage(WebDriver driver)
+    {
+        this.driver = driver;
     }
 
-    public String getCurrentURL(){
+    public String GetCurrentURL()
+    {
         return driver.getCurrentUrl();
     }
 
-    public String getDashboardText(){
-        return driver.findElement(dashboard_text).getText();
+    public String GetDashboardText()
+    {
+        return driver.findElement(dashboardText).getText();
     }
 
-    public String getFirstProductInCart(){
-        return driver.findElement(first_productincart).getText();
+    public String GetFirstItemInCart()
+    {
+        return driver.findElement(firstItemInCart).getText();
     }
 
-    public String getSecondProductInCart(){
-        return driver.findElement(second_productincart).getText();
+    public String GetSecondItemInCart()
+    {
+        return driver.findElement(secondItemInCart).getText();
     }
 
-    public void clickFinishButton(){
-        driver.findElement(finish_button).click();
+    public void ClickFinishButton()
+    {
+        driver.findElement(finishButton).click();
     }
 }

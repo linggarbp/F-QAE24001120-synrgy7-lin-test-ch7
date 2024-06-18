@@ -6,47 +6,54 @@ import org.openqa.selenium.WebDriver;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
 
-public class InformationPage {
-    //atribut untuk  masing-masing element
+public class InformationPage
+{
     WebDriver driver;
 
-    By dashboard_text = xpath("//*[@data-test='title']");
-    By Form = xpath("//*[@class='checkout_info']");
+    By dashboardText = xpath("//*[@data-test='title']");
+    By checkoutForm = xpath("//*[@class='checkout_info']");
     By firstNameField = id("first-name");
     By lastNameField = id("last-name");
     By postalCodeField = id("postal-code");
-    By continue_button = xpath("//*[@data-test='continue']");
+    By continueButton = xpath("//*[@data-test='continue']");
 
-    //method untuk action
-    public InformationPage(WebDriver driver){
+    public InformationPage(WebDriver driver)
+    {
         this.driver=driver;
     }
 
-    public String getCurrentURL(){
+    public String GetCurrentURL()
+    {
         return driver.getCurrentUrl();
     }
 
-    public String getDashboardText(){
-        return driver.findElement(dashboard_text).getText();
+    public String GetDashboardText()
+    {
+        return driver.findElement(dashboardText).getText();
     }
 
-    public void formIsDisplayed(){
-        driver.findElement(Form).isDisplayed();
+    public void CheckoutFormIsDisplayed()
+    {
+        driver.findElement(checkoutForm).isDisplayed();
     }
 
-    public void inputFirstName(String firstName){
+    public void InputFirstName(String firstName)
+    {
         driver.findElement(firstNameField).sendKeys(firstName);
     }
 
-    public void inputLastName(String lastName){
+    public void InputLastName(String lastName)
+    {
         driver.findElement(lastNameField).sendKeys(lastName);
     }
 
-    public void inputPostalCode(String postalCode){
+    public void InputPostalCode(String postalCode)
+    {
         driver.findElement(postalCodeField).sendKeys(postalCode);
     }
 
-    public void clickContinueButton(){
-        driver.findElement(continue_button).click();
+    public void ClickContinueButton()
+    {
+        driver.findElement(continueButton).click();
     }
 }
