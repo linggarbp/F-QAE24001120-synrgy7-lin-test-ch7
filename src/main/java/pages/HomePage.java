@@ -20,9 +20,9 @@ public class HomePage
     By cartBadge = className("shopping_cart_badge");
     By cartIcon = className("shopping_cart_link");
 
-    public int clickCountAddToCartButton;
     public String firstProductName;
     public String secondProductName;
+    public int clickCountAddToCartButton;
 
     public HomePage(WebDriver driver)
     {
