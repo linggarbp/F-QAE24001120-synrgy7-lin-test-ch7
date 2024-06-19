@@ -14,6 +14,8 @@ import pages.LoginPage;
 
 import java.time.Duration;
 
+import static org.openqa.selenium.By.*;
+
 public class SortingHighLow
 {
     WebDriver driver;
@@ -22,18 +24,18 @@ public class SortingHighLow
     public void SetUp()
     {
         driver = WebDriverManager.chromedriver().create();
-        driver.manage().window().maximize();
+        driver.manage().window().minimize();
         driver.get("https://www.saucedemo.com/");
     }
 
     @Test
     public void AALoginTest()
     {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = new HomePage(driver);
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(id("user-name")));
         Assert.assertEquals(loginPage.GetCurrentURL(),"https://www.saucedemo.com/");
         loginPage.UsernameFieldIsDisplayed();
         loginPage.PasswordFieldIsDisplayed();
@@ -49,15 +51,15 @@ public class SortingHighLow
     @Test
     public void BBSortingTest()
     {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         HomePage homePage = new HomePage(driver);
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@data-test='title']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(className("title")));
         homePage.SortingDropdown();
         homePage.ClickHighToLow();
-        float price_first_product= Float.parseFloat(homePage.GetFirstItemPrice());
-        float price_second_product= Float.parseFloat(homePage.GetSecondItemPrice());
-        Assert.assertTrue(price_first_product>price_second_product);
+        float firstItemPrice = Float.parseFloat(homePage.GetFirstItemPrice());
+        float secondItemPrice = Float.parseFloat(homePage.GetSecondItemPrice());
+        Assert.assertTrue(firstItemPrice > secondItemPrice);
     }
 
     @AfterClass

@@ -3,33 +3,20 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static org.openqa.selenium.By.*;
+
 public class LoginPage
 {
     WebDriver driver;
 
-    By usernameField = By.id("user-name");
-    By passwordField = By.id("password");
-    By loginButton = By.id("login-button");
-    By errorMessage = By.xpath("//*[@data-test='error']");
+    By usernameField = id("user-name");
+    By passwordField = id("password");
+    By loginButton = id("login-button");
+    By errorMessage = className("error-message-container");
 
     public LoginPage(WebDriver driver)
     {
         this.driver = driver;
-    }
-
-    public void InputUsername(String username)
-    {
-        driver.findElement(usernameField).sendKeys(username);
-    }
-
-    public void InputPassword(String password)
-    {
-        driver.findElement(passwordField).sendKeys(password);
-    }
-
-    public void ClickLoginButton()
-    {
-        driver.findElement(loginButton).click();
     }
 
     public String GetCurrentURL()
@@ -50,6 +37,21 @@ public class LoginPage
     public void LoginButtonIsDisplayed()
     {
         driver.findElement(loginButton).isDisplayed();
+    }
+
+    public void InputUsername(String username)
+    {
+        driver.findElement(usernameField).sendKeys(username);
+    }
+
+    public void InputPassword(String password)
+    {
+        driver.findElement(passwordField).sendKeys(password);
+    }
+
+    public void ClickLoginButton()
+    {
+        driver.findElement(loginButton).click();
     }
 
     public void ErrorMessageIsDisplayed()

@@ -3,21 +3,21 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.By.*;
 
-public class CheckoutPage
+public class CompletePage
 {
     WebDriver driver;
 
-    By dashboardText = xpath("//*[@data-test='title']");
-    By completeIcon = xpath("//*[@data-test='pony-express']");
-    By greetingText = xpath("//*[@data-test='complete-header']");
-    By descriptionText = xpath("//*[@data-test='complete-text']");
-    By backButton = xpath("//*[@data-test='back-to-products']");
+    By dashboardText = className("title");
+    By completeIcon = className("pony_express");
+    By headerText = className("complete-header");
+    By descriptionText = className("complete-text");
+    By backButton = id("back-to-products");
 
-    public CheckoutPage(WebDriver driver)
+    public CompletePage(WebDriver driver)
     {
-        this.driver=driver;
+        this.driver = driver;
     }
 
     public String GetCurrentURL()
@@ -35,9 +35,9 @@ public class CheckoutPage
         driver.findElement(completeIcon).isDisplayed();
     }
 
-    public String GetGreetingText()
+    public String GetHeaderText()
     {
-        return driver.findElement(greetingText).getText();
+        return driver.findElement(headerText).getText();
     }
 
     public String GetDescriptionText()

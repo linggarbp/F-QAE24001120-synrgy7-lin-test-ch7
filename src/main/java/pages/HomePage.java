@@ -2,23 +2,23 @@ package pages;
 
 import org.openqa.selenium.*;
 
-import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.By.*;
 
 public class HomePage
 {
     WebDriver driver;
 
-    By dashboardText = xpath("//*[@data-test='title']");
-    By cartIcon = xpath("//*[@data-test='shopping-cart-link']");
-    By sortingDropdown = xpath("//*[@data-test='product-sort-container']");
-    By highToLow = xpath("//*[@value='hilo']");
-    By firstItemPrice = xpath("(//*[@data-test='inventory-item-price'])[1]");
-    By secondItemPrice = xpath("(//*[@data-test='inventory-item-price'])[2]");
-    By addToCartFirstItemButton = xpath("//button[@data-test='add-to-cart-sauce-labs-backpack']");
-    By addToCartSecondItemButton = xpath("//button[@data-test='add-to-cart-sauce-labs-bike-light']");
-    By cartBadge = xpath("//*[@data-test='shopping-cart-badge']");
+    By dashboardText = className("title");
+    By sortingDropdown = className("product_sort_container");
+    By highToLow = xpath("//option[@value='hilo']");
     By firstItemName = xpath("(//*[@data-test='inventory-item-name'])[1]");
+    By firstItemPrice = xpath("(//*[@data-test='inventory-item-price'])[1]");
+    By addToCartFirstItemButton = id("add-to-cart-sauce-labs-backpack");
     By secondItemName = xpath("(//*[@data-test='inventory-item-name'])[2]");
+    By secondItemPrice = xpath("(//*[@data-test='inventory-item-price'])[2]");
+    By addToCartSecondItemButton = id("add-to-cart-sauce-labs-bike-light");
+    By cartBadge = className("shopping_cart_badge");
+    By cartIcon = className("shopping_cart_link");
 
     public int clickCountAddToCartButton;
     public String firstProductName;
@@ -26,7 +26,7 @@ public class HomePage
 
     public HomePage(WebDriver driver)
     {
-        this.driver=driver;
+        this.driver = driver;
     }
 
     public String GetCurrentURL()
@@ -58,28 +58,8 @@ public class HomePage
     {
         WebElement element = driver.findElement(firstItemPrice);
 
-        // Get the text of the element
         String elementText = element.getText();
-
-        // Split the text into words
-        String[] words = elementText.split(" ");
-
-        // Create a StringBuilder to store the modified text
-        StringBuilder modifiedText = new StringBuilder();
-
-        // Loop through each word, remove the first letter, and append to StringBuilder
-        for (String word : words) {
-            if (word.length() > 1) {
-                modifiedText.append(word.substring(1)).append(" ");
-            } else {
-                // In case the word is a single letter, we just skip it or handle it accordingly
-                modifiedText.append(" ");
-            }
-        }
-
-        // Convert StringBuilder to String and trim the trailing space
-        String price = modifiedText.toString().trim();
-
+        String price = elementText.substring(1);
         return price;
     }
 
@@ -87,43 +67,23 @@ public class HomePage
     {
         WebElement element = driver.findElement(secondItemPrice);
 
-        // Get the text of the element
         String elementText = element.getText();
-
-        // Split the text into words
-        String[] words = elementText.split(" ");
-
-        // Create a StringBuilder to store the modified text
-        StringBuilder modifiedText = new StringBuilder();
-
-        // Loop through each word, remove the first letter, and append to StringBuilder
-        for (String word : words) {
-            if (word.length() > 1) {
-                modifiedText.append(word.substring(1)).append(" ");
-            } else {
-                // In case the word is a single letter, we just skip it or handle it accordingly
-                modifiedText.append(" ");
-            }
-        }
-
-        // Convert StringBuilder to String and trim the trailing space
-        String price = modifiedText.toString().trim();
-
+        String price = elementText.substring(1);
         return price;
     }
 
     public void ClickAddToCartFirstItem()
     {
         driver.findElement(addToCartFirstItemButton).click();
-        clickCountAddToCartButton++;
         firstProductName = driver.findElement(firstItemName).getText();
+        clickCountAddToCartButton++;
     }
 
     public void ClickAddToCartSecondItem()
     {
         driver.findElement(addToCartSecondItemButton).click();
-        clickCountAddToCartButton++;
         secondProductName = driver.findElement(secondItemName).getText();
+        clickCountAddToCartButton++;
     }
 
     public String GetCartBadge()

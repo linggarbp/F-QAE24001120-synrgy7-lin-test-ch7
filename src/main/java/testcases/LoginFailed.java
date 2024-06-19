@@ -13,6 +13,8 @@ import pages.LoginPage;
 
 import java.time.Duration;
 
+import static org.openqa.selenium.By.*;
+
 public class LoginFailed
 {
     WebDriver driver;
@@ -21,23 +23,23 @@ public class LoginFailed
     public void SetUp()
     {
         driver = WebDriverManager.chromedriver().create();
-        driver.manage().window().maximize();
+        driver.manage().window().minimize();
         driver.get("https://www.saucedemo.com/");
     }
 
     @Test
     public void AALoginTest()
     {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         LoginPage loginPage = new LoginPage(driver);
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(id("user-name")));
         Assert.assertEquals(loginPage.GetCurrentURL(),"https://www.saucedemo.com/");
         loginPage.UsernameFieldIsDisplayed();
         loginPage.PasswordFieldIsDisplayed();
         loginPage.LoginButtonIsDisplayed();
         loginPage.InputUsername("standard_user");
-        loginPage.InputPassword("passwordtestnegative");
+        loginPage.InputPassword("tomato_sauce");
         loginPage.ClickLoginButton();
         Assert.assertEquals(loginPage.GetCurrentURL(),"https://www.saucedemo.com/");
         loginPage.ErrorMessageIsDisplayed();

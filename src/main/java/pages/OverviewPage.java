@@ -3,16 +3,16 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.By.*;
 
 public class OverviewPage
 {
     WebDriver driver;
 
-    By dashboardText = xpath("//*[@data-test='title']");
+    By dashboardText = className("title");
     By firstItemInCart = xpath("(//*[@data-test='inventory-item-name'])[1]");
     By secondItemInCart = xpath("(//*[@data-test='inventory-item-name'])[2]");
-    By finishButton = xpath("//*[@data-test='finish']");
+    By finishButton = id("finish");
 
     public OverviewPage(WebDriver driver)
     {

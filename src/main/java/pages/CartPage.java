@@ -3,19 +3,20 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.By.*;
 
-public class CartPage {
+public class CartPage
+{
     WebDriver driver;
 
-    By dashboardText = xpath("//*[@data-test='title']");
+    By dashboardText = className("title");
     By firstItemCart = xpath("(//*[@data-test='inventory-item-name'])[1]");
     By secondItemCart = xpath("(//*[@data-test='inventory-item-name'])[2]");
-    By checkoutButton = xpath("//*[@data-test='checkout']");
+    By checkoutButton = id("checkout");
 
     public CartPage(WebDriver driver)
     {
-        this.driver=driver;
+        this.driver = driver;
     }
 
     public String GetCurrentURL()
